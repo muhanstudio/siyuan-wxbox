@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  siyuan:
+    image: b3log/siyuan:latest
+    container_name: siyuan
+    restart: always
+    volumes:
+      - /www/SiYuan:/home/siyuan/SiYuan:rw
+    command: [-accessAuthCode=123456,-lang=zh_CN]
+    network_mode: "host"
