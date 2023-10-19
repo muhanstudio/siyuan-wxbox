@@ -27,7 +27,13 @@
 
 ​![Screenshot_2023-10-19-00-50-29-588_com.tencent.mm](assets/Screenshot_2023-10-19-00-50-29-588_com.tencent.mm-20231019005058-m6xp5tf.jpg)​
 
-​![image](assets/image-20231019005051-lux42c4.png)​
+​![image](assets/image-20231019005051-lux42c4.png)
+
+位置信息（自动解析经纬度以及地名，显示地图放缩倍数）：
+
+​![image-DDlhDdt.png](assets/image-DDlhDdt.png)​
+
+​![image-iE5rFVR.png](assets/image-iE5rFVR.png)​
 
 感谢[https://github.com/offu/WeRoBot](https://github.com/offu/WeRoBot)提供的基础架构
 
