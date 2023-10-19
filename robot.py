@@ -105,7 +105,7 @@ def voice_note(message, session):
 def location_note(message, session):
     if message.source == openid:
         location = message.location
-        scale = message.location
+        scale = message.scale
         latitude = str(location[0])
         longitude = str(location[1])
         scale_str = str(scale)
