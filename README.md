@@ -7,7 +7,7 @@
 
 本项目可以为你制作一个完全的属于自己的微信收集箱。
 
-详细搭建教程：[https://doc.muhan.studio/#/siyuan-wxbox]([https://doc.muhan.studio/#/siyuan-wxbox](https://doc.muhan.studio/#/github/siyuan-wxbox/))
+详细搭建教程：[https://doc.muhan.studio/#/siyuan-wxbox]([https://doc.muhan.studio/#/siyuan-wxbox](https://doc.muhan.studio/#/github/siyuan-wxbox/)
 
 ## 演示图：
 
