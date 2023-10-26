@@ -3,11 +3,12 @@ import config as cfg
 import requests
 import datetime
 
+#定义主要参数
 myrobot = WeRoBot(token=cfg.token)
 myrobot.config["APP_ID"] = cfg.appid
 myrobot.config['ENCODING_AES_KEY'] = cfg.aeskey
 urlmd = "http://127.0.0.1:6806/api/filetree/createDocWithMd"
-openid = "你的微信openid"
+openid = "你的微信openid" #可以修改成多个openid，达到多人共同写入笔记本的目的
 notebook = "你的笔记本ID"
 apitoken = "你的思源笔记apitoken"
 
@@ -30,6 +31,7 @@ minute = now.strftime("%M")
 second = now.strftime("%S")
 path = f"{year}年{month}月{day}日星期{weekday}-{hour}:{minute}:{second}"
 
+#定义请求头
 headers = {
     'Content-Type': 'application/json',
     'Authorization' : f'Token {apitoken}'
@@ -38,11 +40,13 @@ headers2 = {
     'Authorization' : f'Token {apitoken}'
 }
 
+#收到图片消息时的动作
 @myrobot.image
 def image_note(message, session):
+    #判断用户openid是否有权限写入笔记本
     if message.source == openid:
         name = f"{year}-{month}-{day}--{hour}:{minute}:{second}"
-        url = "http://127.0.0.1:6806/api/asset/upload"
+        url = "http://127.0.0.1:6806/api/asset/upload" #思源笔记上传文件的api
         file_url = message.img
         response = requests.get(file_url)
         file_content = response.content
@@ -56,7 +60,7 @@ def image_note(message, session):
         data = {
             "notebook": notebook,
             "path": f"【图片】-{path}",
-            "markdown": f"![微信图片{name}]({pathp})"
+            "markdown": f"![微信图片{name}]({pathp})" #以markdown形式写入到思源笔记
         }
         response = requests.post(urlmd, headers=headers, json=data)
         result = response.json()
@@ -67,13 +71,15 @@ def image_note(message, session):
     else:
         return f"此用户无权限:{message.source}"
 
+#定义收到文本消息的动作
 @myrobot.text
 def test_note(message, session):
+    #判断用户openid是否有权限写入笔记本
     if message.source == openid:
         data = {
         "notebook": notebook,
         "path": f"【文字】-{path}",
-        "markdown": message.content
+        "markdown": message.content #以markdown形式写入到思源笔记
         }
         response = requests.post(urlmd, headers=headers, json=data)
         result = response.json()
@@ -84,13 +90,15 @@ def test_note(message, session):
     else:
         return f"此用户无权限:{message.source}"
 
+#定义收到语音消息的动作
 @myrobot.voice
 def voice_note(message, session):
+    #判断用户openid是否有权限写入笔记本
     if message.source == openid:
         data = {
         "notebook": notebook,
         "path": f"【语音】-{path}",
-        "markdown": message.recognition
+        "markdown": message.recognition #以markdown形式写入到思源笔记
         }
         response = requests.post(urlmd, headers=headers, json=data)
         result = response.json()
@@ -101,6 +109,7 @@ def voice_note(message, session):
     else:
         return f"此用户无权限:{message.source}"
 
+#定义收到位置消息的动作
 @myrobot.location
 def location_note(message, session):
     if message.source == openid:
@@ -112,7 +121,7 @@ def location_note(message, session):
         data = {
         "notebook": notebook,
         "path": f"【位置】-{path}",
-        "markdown": f"经：{longitude}\n纬：{latitude}\n放缩：{scale_str}\n描述：{message.label}"
+        "markdown": f"经：{longitude}\n纬：{latitude}\n放缩倍数：{scale_str}\n描述：{message.label}" #以markdown形式写入到思源笔记
         }
         response = requests.post(urlmd, headers=headers, json=data)
         result = response.json()
@@ -123,13 +132,14 @@ def location_note(message, session):
     else:
         return f"此用户无权限:{message.source}"
 
+#定义收到链接消息的动作
 @myrobot.link
 def link_note(message, session):
     if message.source == openid:
         data = {
         "notebook": notebook,
         "path": f"【链接】-{path}",
-        "markdown": f"链接：{message.url}\n标题：{message.title}\n描述：{message.description}"
+        "markdown": f"链接：{message.url}\n标题：{message.title}\n描述：{message.description}" #以markdown形式写入到思源笔记
         }
         response = requests.post(urlmd, headers=headers, json=data)
         result = response.json()
